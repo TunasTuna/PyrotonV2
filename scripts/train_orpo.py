@@ -24,7 +24,15 @@ import torch
 from datasets import load_dataset
 from peft import LoraConfig, PeftModel, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from trl import ORPOConfig, ORPOTrainer
+
+# ORPO's location in trl has moved between versions: older trl exposes it at
+# the top level (trl.ORPOConfig / trl.ORPOTrainer); newer trl (where GRPO
+# became the top-level default) moved it into trl.experimental.orpo. Try both
+# so this script works regardless of which trl version got installed.
+try:
+    from trl import ORPOConfig, ORPOTrainer
+except ImportError:
+    from trl.experimental.orpo import ORPOConfig, ORPOTrainer
 
 BASE_MODEL = "Qwen/Qwen2.5-Coder-0.5B-Instruct"
 
@@ -47,6 +55,15 @@ def parse_args():
     p.add_argument("--lora-alpha", type=int, default=32)
     p.add_argument("--push", action="store_true")
     p.add_argument("--hub-id", type=str, default=None)
+    p.add_argument("--save-strategy", type=str, default="steps", choices=["steps", "epoch"],
+                    help="Checkpoint by step count (safer against Colab disconnects) or by epoch")
+    p.add_argument("--save-steps", type=int, default=50,
+                    help="Save a checkpoint every N steps when --save-strategy steps")
+    p.add_argument("--save-total-limit", type=int, default=3,
+                    help="Keep only the N most recent checkpoints (avoids filling up Drive)")
+    p.add_argument("--resume", action="store_true",
+                    help="Resume from the latest checkpoint in --output-dir if one exists. "
+                         "Safe to always pass -- if no checkpoint is found, training starts fresh.")
     return p.parse_args()
 
 
@@ -108,7 +125,9 @@ def main():
         max_prompt_length=args.max_length // 2,
         bf16=True,
         logging_steps=10,
-        save_strategy="epoch",
+        save_strategy=args.save_strategy,
+        save_steps=args.save_steps if args.save_strategy == "steps" else None,
+        save_total_limit=args.save_total_limit,
         report_to=[],
     )
 
@@ -119,8 +138,21 @@ def main():
         processing_class=tokenizer,
     )
 
+    # Look for an existing checkpoint to resume from (e.g. after a Colab
+    # disconnect). transformers' Trainer stores checkpoints as
+    # "checkpoint-<step>" folders inside output_dir.
+    resume_arg = False
+    if args.resume:
+        out_dir = Path(args.output_dir)
+        checkpoints = sorted(out_dir.glob("checkpoint-*")) if out_dir.exists() else []
+        if checkpoints:
+            resume_arg = True
+            print(f"Found {len(checkpoints)} checkpoint(s) in {args.output_dir}; resuming from the latest.")
+        else:
+            print(f"--resume was passed but no checkpoints found in {args.output_dir}; starting fresh.")
+
     print("Starting ORPO training...")
-    trainer.train()
+    trainer.train(resume_from_checkpoint=resume_arg)
 
     print(f"Saving adapter to {args.output_dir}")
     trainer.save_model(args.output_dir)
