@@ -9,6 +9,8 @@ assertions. An edge stays in the verifier only if its domain and expected
 behavior have an explicit contract review. Tasks without retained reviewed
 edges use their original assertions. The report preserves the original
 verdicts and includes a reproducible sample of 30 original edge-only failures.
+Isolated watchdog replays distinguish load failures, failures under original
+tests, and failures that reproduce with the extra checks enabled.
 
 The rebuilt ORPO pairs use the same prompt for both answers and require the
 longer completion to have at most 125% of the shorter completion's token
