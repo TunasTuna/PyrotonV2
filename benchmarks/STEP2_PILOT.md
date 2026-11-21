@@ -31,6 +31,11 @@ to compare caps on the same backend. The historical Windows CPU baseline
 is also recorded for the primary suite. The baseline file preserves the
 exact settings for all runs.
 
+For a CPU comparison that reuses the primary Step 1 results, pass the
+MBPP+ control with `--matched256-mbppplus-generations` and
+`--matched256-mbppplus-scores`. The reporter can pair either suite
+independently and checks that only the output cap changed in paired runs.
+
 ## Verification and selection
 
 The corpus builder loads original MBPP training IDs 601?974 and validation

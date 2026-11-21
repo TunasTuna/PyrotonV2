@@ -40,8 +40,16 @@ def stats(ids, outcomes, raw_tokens, cap):
     values = [raw_tokens[key] for key in ids]
     return {
         "passed": sum(outcomes[key] for key in ids), "tasks": len(ids),
-        "median_tokens": median(values), "at_cap": sum(count >= cap for count in values),
+        "median_tokens": median(values), "max_tokens": max(values),
+        "at_cap": sum(count >= cap for count in values),
     }
+
+
+def matched_control(dataset, generations_file, scores_file, comparison_config):
+    generation, scores, config = load_run(dataset, generations_file, scores_file, 256)
+    if {**config, "new_tokens": 512} != comparison_config:
+        raise ValueError("Matched runs must differ only in the output cap.")
+    return generation, scores, config
 
 
 def main():
@@ -60,10 +68,13 @@ def main():
     )
     if bool(args.mbppplus_generations) != bool(args.mbppplus_scores):
         parser.error("Supply both MBPP+ files when reporting that suite.")
-    matched = (args.matched256_primary_generations, args.matched256_primary_scores,
-               args.matched256_mbppplus_generations, args.matched256_mbppplus_scores)
-    if any(matched) and (not all(matched) or not args.mbppplus_generations):
-        parser.error("The matched control requires both suites at both token caps.")
+    matched_primary = (args.matched256_primary_generations, args.matched256_primary_scores)
+    matched_mbpp = (args.matched256_mbppplus_generations, args.matched256_mbppplus_scores)
+    for suite, pair in (("primary", matched_primary), ("MBPP+", matched_mbpp)):
+        if any(pair) and not all(pair):
+            parser.error(f"Supply both 256-token files for the {suite} suite.")
+    if all(matched_mbpp) and not args.mbppplus_generations:
+        parser.error("Supply the 512-token MBPP+ files alongside its 256-token control.")
     old_report = read(args.old_baseline)
     primary_tasks = {row["id"]: row for row in read(args.primary)}
     final_dev = read(args.dev)
@@ -78,8 +89,8 @@ def main():
         raise ValueError("Stock model differs from the 256-token run.")
     old_scores = {key: row["passed"] for key, row in old.items()}
     old_tokens = {key: row["tokens"] for key, row in old.items()}
+    methodology = ["Dev scores use the corresponding full primary generations."]
     output = {
-        "methodology": "Dev uses the same responses as the full-suite 512-token run. The MBPP+ holdout has no historical 256-token score.",
         "complete": bool(args.mbppplus_generations),
         "primary512_configuration": primary_config,
         "primary256_configuration": old_report["stock_configuration"], "suites": {},
@@ -101,25 +112,34 @@ def main():
             "512": stats(set(mbpp), {key: row["passed"] for key, row in mbpp_scores.items()},
                          {key: row["tokens"] for key, row in mbpp.items()}, 512),
         }
-    if all(matched):
-        match_primary, match_scores, match_config = load_run(args.primary, *matched[:2], 256)
-        match_mbpp, match_mbpp_scores, match_mbpp_config = load_run(args.mbppplus, *matched[2:], 256)
-        for left, right in ((match_config, primary_config), (match_mbpp_config, mbpp_config)):
-            if {k: v for k, v in left.items() if k != "new_tokens"} != {k: v for k, v in right.items() if k != "new_tokens"}:
-                raise ValueError("Matched runs must differ only in the output cap.")
-        output["methodology"] = "Dev uses the full-suite responses. Both token caps were measured on the same backend in this run."
+    if all(matched_primary):
+        match_primary, match_scores, match_config = matched_control(args.primary, *matched_primary, primary_config)
         output["matched256_primary_configuration"] = match_config
-        output["matched256_mbppplus_configuration"] = match_mbpp_config
-        for name, ids, generation, outcomes in (
-            ("dev", dev, match_primary, match_scores),
-            ("full160", set(primary), match_primary, match_scores),
-            ("mbppplus", set(mbpp), match_mbpp, match_mbpp_scores),
-        ):
+        methodology.append("The primary cap comparison uses matched settings and preserves the historical 256-token result.")
+        for name, ids in (("dev", dev), ("full160", set(primary))):
             suite = output["suites"][name]
-            if "256" in suite:
-                suite["historical256"] = suite["256"]
-            suite["256"] = stats(ids, {key: row["passed"] for key, row in outcomes.items()},
-                                 {key: row["tokens"] for key, row in generation.items()}, 256)
+            suite["historical256"] = suite["256"]
+            suite["256"] = stats(ids, {key: row["passed"] for key, row in match_scores.items()},
+                                 {key: row["tokens"] for key, row in match_primary.items()}, 256)
+    else:
+        methodology.append("The primary 256-token scores come from the historical Step 1 run.")
+    if all(matched_mbpp):
+        match_mbpp, match_mbpp_scores, match_mbpp_config = matched_control(args.mbppplus, *matched_mbpp, mbpp_config)
+        output["matched256_mbppplus_configuration"] = match_mbpp_config
+        output["suites"]["mbppplus"]["256"] = stats(
+            set(mbpp), {key: row["passed"] for key, row in match_mbpp_scores.items()},
+            {key: row["tokens"] for key, row in match_mbpp.items()}, 256,
+        )
+        outcome_changes = {"passed_at_512_only": [], "passed_at_256_only": []}
+        for key in sorted(mbpp):
+            passed_at_256 = match_mbpp_scores[key]["passed"]
+            passed_at_512 = mbpp_scores[key]["passed"]
+            if passed_at_256 != passed_at_512:
+                bucket = "passed_at_512_only" if passed_at_512 else "passed_at_256_only"
+                outcome_changes[bucket].append(key)
+        output["mbppplus_outcome_changes"] = outcome_changes
+        methodology.append("The MBPP+ runs differ only in the token cap.")
+    output = {"methodology": " ".join(methodology), **output}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(output["suites"], indent=2))
