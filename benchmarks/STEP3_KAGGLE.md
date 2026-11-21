@@ -35,5 +35,25 @@ Regression labels use the first scored diagnostic and known fixture
 boundaries. The CLI rejects any dataset other than the frozen dev and
 MBPP+ snapshots.
 
+## Pilot results
+
+Neither checkpoint passed the two-suite gate. The frozen stock model
+passed 37/60 on dev and 96/162 on MBPP+. The fixed stock repeats produced
+identical answers and verdicts on all 222 tasks.
+
+- Epoch 1 passed 35/60 on dev (0 wins, 2 losses, exact McNemar p = 0.5000)
+  and 98/162 on MBPP+ (6 wins, 4 losses, p = 0.7539).
+- Epoch 2 passed 34/60 on dev (1 win, 4 losses, p = 0.3750) and 99/162
+  on MBPP+ (11 wins, 8 losses, p = 0.6476).
+- Median MBPP+ output fell from 62.5 tokens for stock to 36.5 and 27.5.
+  Median dev output was 105, 100 and 127 tokens, respectively.
+- Manual review found 15 logic regressions, one zero-input regression,
+  and two missing-import regressions across both checkpoints. This counts
+  a task again when both checkpoints regressed on it.
+- Training completed 23 optimizer steps per epoch, resuming from the
+  saved optimizer state after an adapter export callback error. Mean
+  logged loss was 2.0813 and 1.7116. Mean reward margin rose from 0.004239
+  to 0.004382, with no non-finite metrics recorded.
+
 - [Kaggle notebook documentation](https://www.kaggle.com/docs/notebooks)
 - [Pinned llama.cpp release](https://github.com/ggml-org/llama.cpp/releases/tag/b12521)
