@@ -7,7 +7,8 @@ from pathlib import Path
 
 from generate_holdout import digest
 from pilot_verifier import PilotSandbox, verify_candidate
-from sample_pilot import MAX_TOKENS, TEMPERATURE, identity, jobs_for, read_journal
+from sample_pilot import (MAX_TOKENS, PER_STYLE, TEMPERATURE, ZERO_PASS_PER_STYLE,
+                          identity, jobs_for, protocol, read_journal)
 from score_holdout import extract
 
 
@@ -24,13 +25,14 @@ def main():
     for name in ("verified-corpus", "samples", "output"):
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--deadline", type=int, default=8)
+    parser.add_argument("--draws-per-style", type=int, default=PER_STYLE, choices=(PER_STYLE, ZERO_PASS_PER_STYLE))
     parser.add_argument("--allow-partial", action="store_true", help="Smoke testing only.")
     args = parser.parse_args()
     if args.deadline < 1:
         parser.error("--deadline must be positive")
     corpus = json.loads(args.verified_corpus.read_bytes())
     rows = {row["id"]: row for row in corpus}
-    expected = {identity(job): job for job in jobs_for(corpus)}
+    expected = {identity(job): job for job in jobs_for(corpus, args.draws_per_style)}
     samples = load_records(args.samples)
     if not samples:
         parser.error("The sample journal is empty.")
@@ -40,7 +42,8 @@ def main():
         raise ValueError("Unknown sample IDs.")
     config = next(iter(samples.values()))["configuration"]
     if (config.get("verified_corpus_sha256") != digest(args.verified_corpus)
-            or config.get("max_tokens") != MAX_TOKENS or config.get("temperature") != TEMPERATURE):
+            or config.get("max_tokens") != MAX_TOKENS or config.get("temperature") != TEMPERATURE
+            or config.get("per_style") != args.draws_per_style or config.get("protocol") != protocol(args.draws_per_style)):
         raise ValueError("Generation provenance did not match this pilot.")
     for key, sample in samples.items():
         if (sample["configuration"] != config

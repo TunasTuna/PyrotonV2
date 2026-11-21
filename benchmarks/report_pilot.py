@@ -202,7 +202,7 @@ def behavioral_failure(row):
     return not row["passed"] and row["signature_ok"] and key in BEHAVIORAL_FAILURES
 
 
-def pick_examples(task, rows):
+def pick_examples(task, rows, max_pair_ratio=None):
     by_code = defaultdict(set)
     for row in rows:
         by_code[row["code"]].add(row["passed"])
@@ -225,7 +225,9 @@ def pick_examples(task, rows):
     for chosen in positive if mixed else []:
         eligible = [row for row in eligible_rows if behavioral_failure(row)
                     and row["code"] != chosen["code"]
-                    and row["prompt"] == chosen["prompt"] and row["style"] == chosen["style"]]
+                    and row["prompt"] == chosen["prompt"] and row["style"] == chosen["style"]
+                    and (max_pair_ratio is None or max(row_length(row), row_length(chosen))
+                         <= max_pair_ratio * min(row_length(row), row_length(chosen)))]
         if eligible:
             rejected = min(eligible, key=lambda row: (
                 row["copied_docstring_loose"] != chosen["copied_docstring_loose"],

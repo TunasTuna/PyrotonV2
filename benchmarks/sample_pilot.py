@@ -17,6 +17,7 @@ from score_holdout import extract
 
 STYLES = ("mbpp", "humaneval")
 PER_STYLE = 4
+ZERO_PASS_PER_STYLE = 16
 TEMPERATURE = 0.8
 MAX_TOKENS = 512
 TOP_P = 0.95
@@ -28,8 +29,12 @@ def identity(record):
     return record["problem_id"], record["style"], record["sample_index"]
 
 
-def sample_seed(problem_id, style, index):
-    value = f"{SEED}|{problem_id}|{style}|{index}".encode()
+def protocol(per_style):
+    return SEED if per_style == PER_STYLE else "pyroton-step2b-zero-pass-v1"
+
+
+def sample_seed(problem_id, style, index, per_style=PER_STYLE):
+    value = f"{protocol(per_style)}|{problem_id}|{style}|{index}".encode()
     return int.from_bytes(hashlib.sha256(value).digest()[:4], "big") & 0x7FFF_FFFF
 
 
@@ -39,7 +44,7 @@ def chat_prompt(messages):
     ) + "<|im_start|>assistant\n"
 
 
-def jobs_for(tasks):
+def jobs_for(tasks, per_style=PER_STYLE):
     ids = set()
     for row in tasks:
         problem = row["id"]
@@ -49,10 +54,10 @@ def jobs_for(tasks):
         if not row.get("test_suite_sha256"):
             raise ValueError(f"Problem has no verified test suite: {problem}")
         for style in STYLES:
-            for index in range(PER_STYLE):
+            for index in range(per_style):
                 yield {
                     "problem_id": problem, "style": style, "sample_index": index,
-                    "seed": sample_seed(problem, style, index),
+                    "seed": sample_seed(problem, style, index, per_style),
                     "prompt": [{"role": "system", "content": SYSTEM},
                                {"role": "user", "content": row["prompts"][style]}],
                     "test_suite_sha256": row["test_suite_sha256"],
@@ -130,6 +135,7 @@ def main():
     parser.add_argument("--slots", type=int, default=8)
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--gpu-layers", type=int, default=0)
+    parser.add_argument("--draws-per-style", type=int, default=PER_STYLE, choices=(PER_STYLE, ZERO_PASS_PER_STYLE))
     parser.add_argument("--limit-problems", type=int, help="Smoke test only. Writes to a separate journal.")
     args = parser.parse_args()
     if args.slots < 1 or args.threads < 1 or args.gpu_layers < 0:
@@ -141,13 +147,13 @@ def main():
         parser.error("Cannot find the pinned llama-server executable.")
     server = Path(executable).resolve()
     tasks = json.loads(args.verified_corpus.read_bytes())
-    expected = {identity(job): job for job in jobs_for(tasks[:args.limit_problems])}
+    expected = {identity(job): job for job in jobs_for(tasks[:args.limit_problems], args.draws_per_style)}
     if not expected:
         parser.error("The verified corpus is empty.")
     config = {
-        "protocol": SEED, "model_sha256": digest(args.model), "server_sha256": digest(server),
+        "protocol": protocol(args.draws_per_style), "model_sha256": digest(args.model), "server_sha256": digest(server),
         "verified_corpus_sha256": digest(args.verified_corpus), "max_tokens": MAX_TOKENS,
-        "temperature": TEMPERATURE, "top_p": TOP_P, "top_k": TOP_K, "min_p": 0.0, "per_style": PER_STYLE,
+        "temperature": TEMPERATURE, "top_p": TOP_P, "top_k": TOP_K, "min_p": 0.0, "per_style": args.draws_per_style,
         "slots": args.slots, "threads": args.threads, "gpu_layers": args.gpu_layers,
         "limit_problems": args.limit_problems,
     }
