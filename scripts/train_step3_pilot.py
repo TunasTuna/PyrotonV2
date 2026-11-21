@@ -143,7 +143,8 @@ def main():
                         per_device_train_batch_size=1, gradient_accumulation_steps=4, seed=SEED, data_seed=SEED,
                         fp16=True, bf16=False, max_length=MAX_LENGTH, max_completion_length=MAX_COMPLETION,
                         gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False},
-                        save_strategy="epoch", save_only_model=False, report_to=[], logging_steps=5)
+                        save_strategy="epoch", save_only_model=False, remove_unused_columns=False,
+                        report_to=[], logging_steps=5)
     adapter = LoraConfig(r=16, lora_alpha=32, lora_dropout=0, task_type="CAUSAL_LM",
                          target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
     trainer = ORPOTrainer(model=model, args=config, processing_class=tokenizer,
