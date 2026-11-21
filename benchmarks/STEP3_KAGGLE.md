@@ -11,6 +11,8 @@ metrics or missing or non-increasing mean reward margins.
 The full checkpoint directory can resume a fresh Kaggle session once
 restored as described in cell 0. The two small adapter ZIPs contain the
 weights and epoch provenance for Windows inference. No Hub upload runs.
+When using an interactive session, use Quick Save with outputs after the
+export cell finishes to persist the completed files without a second GPU run.
 
 ## Windows evaluation
 

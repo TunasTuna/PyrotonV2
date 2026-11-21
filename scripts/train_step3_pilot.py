@@ -17,6 +17,7 @@ SEED = 42
 EPOCHS = 2
 LR = 4e-5
 BETA = 0.1
+LEGACY_KAGGLE_TRAINER = "69f224bd11387f094bf6cef95026066c685af0920de9b9e0f6d1ca4e64076e50"
 CHECKPOINT_FILES = {"adapter_model.safetensors", "adapter_config.json", "trainer_state.json",
                     "optimizer.pt", "scheduler.pt", "rng_state.pth", "scaler.pt"}
 
@@ -150,8 +151,13 @@ def main():
                 "pairs_sha256": digest(args.pairs), "quality_sha256": digest(args.quality_report),
                 "noise_sha256": digest(args.noise_report), "script_sha256": digest(Path(__file__))}
     if manifest.exists():
-        if json.loads(manifest.read_bytes()) != settings:
-            raise ValueError("The saved run uses different data or settings.")
+        previous = json.loads(manifest.read_bytes())
+        if previous != settings:
+            legacy = {**settings, "script_sha256": LEGACY_KAGGLE_TRAINER}
+            if not kaggle or previous != legacy or set(complete_checkpoints(args.output_dir)) != {1}:
+                raise ValueError("The saved run uses different data or settings.")
+            write_json(manifest, settings)
+            print("Resuming the completed first epoch after fixing the adapter export callback.", flush=True)
     else:
         if any(args.output_dir.iterdir()):
             raise ValueError("Use a fresh output directory for this training protocol.")
@@ -169,9 +175,9 @@ def main():
         raise ValueError("The epoch 1 checkpoint is missing.")
 
     class MarkComplete(TrainerCallback):
-        def on_save(self, args, state, control, **kwargs):
+        def on_save(self, training_args, state, control, **kwargs):
             epoch = round(state.epoch)
-            checkpoint = Path(args.output_dir) / f"checkpoint-{state.global_step}"
+            checkpoint = Path(training_args.output_dir) / f"checkpoint-{state.global_step}"
             if epoch not in (1, 2) or abs(epoch - state.epoch) > 1e-6:
                 raise ValueError(f"Unexpected save at epoch {state.epoch}.")
             missing = CHECKPOINT_FILES - {path.name for path in checkpoint.iterdir()}
