@@ -2,8 +2,12 @@
 
 import argparse
 import hashlib
+import inspect
 import json
+import math
 from pathlib import Path
+from statistics import mean
+from zipfile import ZIP_DEFLATED, ZipFile
 
 BASE_MODEL = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
 BASE_REVISION = "2e1fd397ee46e1388853d2af2c993145b0f1098a"
@@ -74,12 +78,51 @@ def complete_checkpoints(root):
     return checkpoints
 
 
+def adapter_archive(checkpoint, epoch, destination):
+    destination.mkdir(parents=True, exist_ok=True)
+    archive_path = destination / f"pyroton-epoch-{epoch}-adapter.zip"
+    temporary = archive_path.with_suffix(".tmp")
+    with ZipFile(temporary, "w", ZIP_DEFLATED) as archive:
+        for name in ("adapter_config.json", "adapter_model.safetensors", "trainer_state.json", "pyroton-complete.json"):
+            archive.write(checkpoint / name, name)
+        manifest = checkpoint.parent / "pilot-run.json"
+        if manifest.is_file():
+            archive.write(manifest, manifest.name)
+    with ZipFile(temporary) as archive:
+        if archive.testzip() is not None:
+            raise ValueError(f"Invalid epoch {epoch} adapter archive.")
+    temporary.replace(archive_path)
+
+
+def training_metrics(history):
+    margins = {str(epoch): [row["rewards/margins"] for row in history
+                           if "rewards/margins" in row and math.ceil(row.get("epoch", 0)) == epoch
+                           and math.isfinite(row["rewards/margins"])] for epoch in (1, 2)}
+    means = {epoch: mean(values) if values else None for epoch, values in margins.items()}
+    abnormal = []
+    for row in history:
+        for key in ("loss", "grad_norm", "rewards/margins", "train_loss"):
+            if key in row and not math.isfinite(row[key]):
+                abnormal.append(f"Non-finite {key} at step {row.get('step', 'unknown')}.")
+    if any(value is None for value in means.values()):
+        abnormal.append("A mean reward margin is missing for at least one epoch.")
+    elif means["2"] <= means["1"]:
+        abnormal.append("Mean reward margin did not grow from epoch 1 to epoch 2.")
+    return {"mean_reward_margin_by_epoch": means, "abnormal": abnormal,
+            "loss_and_margin_log": [{key: (value if not isinstance(value, float) or math.isfinite(value) else str(value))
+                                    for key, value in row.items()} for row in history]}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("pairs", "quality-report", "noise-report", "output-dir"):
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--runtime", choices=("colab", "kaggle"), default="colab")
+    parser.add_argument("--adapter-output-dir", type=Path)
     args = parser.parse_args()
+    if args.runtime == "kaggle" and args.adapter_output_dir is None and not args.validate_only:
+        parser.error("Kaggle runs require --adapter-output-dir.")
     messages = load_pairs(args.pairs, args.quality_report, args.noise_report)
     if args.validate_only:
         print(f"Validated {len(messages)} audited preference pairs.")
@@ -92,14 +135,17 @@ def main():
     from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback, set_seed
     from trl.experimental.orpo import ORPOConfig, ORPOTrainer
 
-    if not torch.cuda.is_available() or "T4" not in torch.cuda.get_device_name(0):
+    kaggle = args.runtime == "kaggle"
+    if not torch.cuda.is_available() or (kaggle and torch.cuda.device_count() != 1):
+        raise RuntimeError("The training process needs exactly one visible Kaggle GPU.")
+    if not kaggle and "T4" not in torch.cuda.get_device_name(0):
         raise RuntimeError("Select a Colab T4 GPU runtime.")
     if Version(torch.__version__) < Version("2.6"):
-        raise RuntimeError("Use a Colab runtime with torch 2.6 or newer for checkpoint resume.")
+        raise RuntimeError("Use a runtime with torch 2.6 or newer for checkpoint resume.")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = args.output_dir / "pilot-run.json"
     settings = {"base_model": BASE_MODEL, "base_revision": BASE_REVISION, "seed": SEED,
-                "rank": 16, "epochs": EPOCHS, "learning_rate": LR, "beta": BETA,
+                "rank": 16, "alpha": 32, "runtime": args.runtime, "epochs": EPOCHS, "learning_rate": LR, "beta": BETA,
                 "max_length": MAX_LENGTH, "max_completion_length": MAX_COMPLETION,
                 "pairs_sha256": digest(args.pairs), "quality_sha256": digest(args.quality_report),
                 "noise_sha256": digest(args.noise_report), "script_sha256": digest(Path(__file__))}
@@ -108,10 +154,15 @@ def main():
             raise ValueError("The saved run uses different data or settings.")
     else:
         if any(args.output_dir.iterdir()):
-            raise ValueError("Use a fresh Drive output directory for this training protocol.")
+            raise ValueError("Use a fresh output directory for this training protocol.")
         write_json(manifest, settings)
     available = complete_checkpoints(args.output_dir)
     if set(available) == {1, 2}:
+        if args.adapter_output_dir:
+            for epoch, checkpoint in sorted(available.items()):
+                adapter_archive(checkpoint, epoch, args.adapter_output_dir)
+            state = json.loads((available[2] / "trainer_state.json").read_bytes())
+            write_json(args.adapter_output_dir / "training-metrics.json", training_metrics(state["log_history"]))
         print("Both completed epoch checkpoints are already available.")
         return
     if 2 in available:
@@ -127,6 +178,18 @@ def main():
             if missing:
                 raise ValueError(f"Incomplete training checkpoint. Missing {sorted(missing)}")
             write_json(checkpoint / "pyroton-complete.json", {"epoch": epoch, "step": state.global_step})
+            if args.adapter_output_dir:
+                adapter_archive(checkpoint, epoch, args.adapter_output_dir)
+
+        def on_log(self, training_args, state, control, logs=None, **kwargs):
+            if not kaggle:
+                return
+            logs = logs or {}
+            flags = [key for key in ("loss", "grad_norm", "rewards/margins", "train_loss")
+                     if key in logs and not math.isfinite(logs[key])]
+            if flags:
+                write_json(args.adapter_output_dir / "training-metrics.json", training_metrics(state.log_history))
+                raise FloatingPointError(f"Non-finite training values {flags} at step {state.global_step}.")
 
     set_seed(SEED)
     tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, revision=BASE_REVISION)
@@ -139,12 +202,22 @@ def main():
             if full_size > MAX_LENGTH or full_size - prompt_size > MAX_COMPLETION:
                 raise ValueError("A preference pair would be truncated. Review its token budget.")
     model = AutoModelForCausalLM.from_pretrained(BASE_MODEL, revision=BASE_REVISION, dtype=torch.float16)
-    config = ORPOConfig(output_dir=str(args.output_dir), num_train_epochs=EPOCHS, beta=BETA, learning_rate=LR,
+    configuration = dict(output_dir=str(args.output_dir), num_train_epochs=EPOCHS, beta=BETA, learning_rate=LR,
                         per_device_train_batch_size=1, gradient_accumulation_steps=4, seed=SEED, data_seed=SEED,
                         fp16=True, bf16=False, max_length=MAX_LENGTH, max_completion_length=MAX_COMPLETION,
                         gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False},
                         save_strategy="epoch", save_only_model=False, remove_unused_columns=False,
-                        report_to=[], logging_steps=5)
+                        report_to=[], logging_steps=1 if kaggle else 5, logging_nan_inf_filter=False)
+    accepted = inspect.signature(ORPOConfig).parameters
+    required = {"output_dir", "num_train_epochs", "beta", "learning_rate", "fp16", "bf16", "save_strategy"}
+    if required - accepted.keys():
+        raise RuntimeError(f"ORPOConfig is missing required options {sorted(required - accepted.keys())}.")
+    if args.adapter_output_dir:
+        args.adapter_output_dir.mkdir(parents=True, exist_ok=True)
+    omitted = sorted(configuration.keys() - accepted.keys())
+    if omitted:
+        print(f"ORPOConfig does not support {omitted} in this version.", flush=True)
+    config = ORPOConfig(**{key: value for key, value in configuration.items() if key in accepted})
     adapter = LoraConfig(r=16, lora_alpha=32, lora_dropout=0, task_type="CAUSAL_LM",
                          target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
     trainer = ORPOTrainer(model=model, args=config, processing_class=tokenizer,
@@ -152,6 +225,11 @@ def main():
     trainer.train(resume_from_checkpoint=str(available[1]) if 1 in available else None)
     if set(complete_checkpoints(args.output_dir)) != {1, 2}:
         raise RuntimeError("The run did not save both epoch checkpoints.")
+    if args.adapter_output_dir:
+        report = training_metrics(trainer.state.log_history)
+        write_json(args.adapter_output_dir / "training-metrics.json", report)
+        for issue in report["abnormal"]:
+            print(issue, flush=True)
 
 
 if __name__ == "__main__":
