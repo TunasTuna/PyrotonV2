@@ -18,6 +18,7 @@ EPOCHS = 2
 LR = 4e-5
 BETA = 0.1
 LEGACY_KAGGLE_TRAINER = "69f224bd11387f094bf6cef95026066c685af0920de9b9e0f6d1ca4e64076e50"
+ORIGINAL_PILOT_TRAINER = "1646d2d18c03c46fa33cff659de3cf74ad944aa586c99b30cbc0ca6ed58f3432"
 CHECKPOINT_FILES = {"adapter_model.safetensors", "adapter_config.json", "trainer_state.json",
                     "optimizer.pt", "scheduler.pt", "rng_state.pth", "scaler.pt"}
 
@@ -62,6 +63,40 @@ def load_pairs(pairs_path, quality_path, noise_path):
                          "chosen": [{"role": "assistant", "content": row["chosen"]}],
                          "rejected": [{"role": "assistant", "content": row["rejected"]}]})
     return messages
+
+
+def single_turn_completion(rendered, answer, eos):
+    expected = answer + eos
+    if not eos or eos in answer or rendered != expected + "\n":
+        raise ValueError("The Qwen chat template did not produce the expected assistant turn.")
+    return expected
+
+
+def render_single_turn_pairs(messages, tokenizer, render):
+    eos = tokenizer.eos_token
+    rows = []
+    for row in messages:
+        rendered = render(row, tokenizer)
+        for side in ("chosen", "rejected"):
+            rendered[side] = single_turn_completion(rendered[side], row[side][0]["content"], eos)
+        rows.append(rendered)
+    return rows
+
+
+def verify_single_turn_labels(rows, dataset, tokenizer):
+    if len(rows) != len(dataset):
+        raise ValueError("ORPO preprocessing changed the number of preference pairs.")
+    for index, (row, encoded) in enumerate(zip(rows, dataset, strict=True), 1):
+        prompt = tokenizer(row["prompt"], add_special_tokens=False).input_ids
+        for side in ("chosen", "rejected"):
+            ids = tokenizer(row["prompt"] + row[side], add_special_tokens=False).input_ids
+            completion = ids[len(prompt):]
+            if (ids[:len(prompt)] != prompt or len(ids) > MAX_LENGTH or len(completion) > MAX_COMPLETION
+                    or completion.count(tokenizer.eos_token_id) != 1 or completion[-1] != tokenizer.eos_token_id
+                    or encoded[f"{side}_input_ids"] != ids
+                    or encoded[f"{side}_labels"] != [-100] * len(prompt) + completion):
+                raise ValueError(f"Unexpected ORPO tokens or labels in pair {index}, {side}.")
+    print(f"Verified one supervised end-of-turn token in all {2 * len(rows)} completions.", flush=True)
 
 
 def complete_checkpoints(root):
@@ -121,6 +156,7 @@ def main():
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--runtime", choices=("colab", "kaggle"), default="colab")
     parser.add_argument("--adapter-output-dir", type=Path)
+    parser.add_argument("--single-eot", action="store_true", help="Run the single end-of-turn ablation.")
     args = parser.parse_args()
     if args.runtime == "kaggle" and args.adapter_output_dir is None and not args.validate_only:
         parser.error("Kaggle runs require --adapter-output-dir.")
@@ -134,6 +170,7 @@ def main():
     from packaging.version import Version
     from peft import LoraConfig
     from transformers import AutoModelForCausalLM, AutoTokenizer, TrainerCallback, set_seed
+    from trl.data_utils import maybe_apply_chat_template
     from trl.experimental.orpo import ORPOConfig, ORPOTrainer
 
     kaggle = args.runtime == "kaggle"
@@ -150,14 +187,20 @@ def main():
                 "max_length": MAX_LENGTH, "max_completion_length": MAX_COMPLETION,
                 "pairs_sha256": digest(args.pairs), "quality_sha256": digest(args.quality_report),
                 "noise_sha256": digest(args.noise_report), "script_sha256": digest(Path(__file__))}
+    if args.single_eot:
+        settings["completion_termination"] = "single-eot"
     if manifest.exists():
         previous = json.loads(manifest.read_bytes())
         if previous != settings:
+            original = {**settings, "script_sha256": ORIGINAL_PILOT_TRAINER}
             legacy = {**settings, "script_sha256": LEGACY_KAGGLE_TRAINER}
-            if not kaggle or previous != legacy or set(complete_checkpoints(args.output_dir)) != {1}:
+            if not args.single_eot and previous == original:
+                write_json(manifest, settings)
+            elif not args.single_eot and kaggle and previous == legacy and set(complete_checkpoints(args.output_dir)) == {1}:
+                write_json(manifest, settings)
+                print("Resuming the completed first epoch after fixing the adapter export callback.", flush=True)
+            else:
                 raise ValueError("The saved run uses different data or settings.")
-            write_json(manifest, settings)
-            print("Resuming the completed first epoch after fixing the adapter export callback.", flush=True)
     else:
         if any(args.output_dir.iterdir()):
             raise ValueError("Use a fresh output directory for this training protocol.")
@@ -226,8 +269,12 @@ def main():
     config = ORPOConfig(**{key: value for key, value in configuration.items() if key in accepted})
     adapter = LoraConfig(r=16, lora_alpha=32, lora_dropout=0, task_type="CAUSAL_LM",
                          target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
+    if args.single_eot:
+        messages = render_single_turn_pairs(messages, tokenizer, maybe_apply_chat_template)
     trainer = ORPOTrainer(model=model, args=config, processing_class=tokenizer,
                           train_dataset=Dataset.from_list(messages), peft_config=adapter, callbacks=[MarkComplete()])
+    if args.single_eot:
+        verify_single_turn_labels(messages, trainer.train_dataset, tokenizer)
     trainer.train(resume_from_checkpoint=str(available[1]) if 1 in available else None)
     if set(complete_checkpoints(args.output_dir)) != {1, 2}:
         raise RuntimeError("The run did not save both epoch checkpoints.")

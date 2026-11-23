@@ -47,12 +47,15 @@ def prepare(working):
                    check=True, env={**os.environ, "CUDA_VISIBLE_DEVICES": "0"})
 
 
-def restore(source, destination):
+def restore(source, destination, single_eot):
     if destination.exists() or not source.exists():
         return
     checkpoints = complete_checkpoints(source)
     if 1 not in checkpoints or not (source / "pilot-run.json").is_file():
         raise ValueError("The attached resume input lacks a complete first epoch or run manifest.")
+    manifest = json.loads((source / "pilot-run.json").read_bytes())
+    if manifest.get("completion_termination") != ("single-eot" if single_eot else None):
+        raise ValueError("The attached checkpoints belong to a different training variant.")
     temporary = destination.with_name(destination.name + ".restoring")
     temporary.mkdir(exist_ok=True)
     shutil.copy2(source / "pilot-run.json", temporary)
@@ -68,18 +71,29 @@ def main():
     parser.add_argument("mode", choices=("validate", "prepare", "train", "export"))
     parser.add_argument("--inputs", type=Path, required=True)
     parser.add_argument("--working", type=Path, default=Path("/kaggle/working"))
-    parser.add_argument("--resume", type=Path, default=Path("/kaggle/input/pyroton-v2-resume/checkpoints"))
+    parser.add_argument("--resume", type=Path)
+    parser.add_argument("--single-eot", action="store_true")
     args = parser.parse_args()
+    if args.single_eot:
+        args.working = args.working / "single-eot"
+    elif args.resume is None:
+        args.resume = Path("/kaggle/input/pyroton-v2-resume/checkpoints")
     args.working.mkdir(parents=True, exist_ok=True)
     checkpoints = args.working / "checkpoints"
     if args.mode == "prepare":
         prepare(args.working)
         return
+    if args.mode == "train":
+        prepare(args.working)
+    if args.mode in {"train", "export"} and args.resume is not None:
+        restore(args.resume, checkpoints, args.single_eot)
     if args.mode == "export":
-        restore(args.resume, checkpoints)
         saved = complete_checkpoints(checkpoints)
         if not saved:
             raise RuntimeError("There are no completed epoch checkpoints to export.")
+        manifest = json.loads((checkpoints / "pilot-run.json").read_bytes())
+        if manifest.get("completion_termination") != ("single-eot" if args.single_eot else None):
+            raise ValueError("The saved checkpoints belong to a different training variant.")
         for epoch, checkpoint in sorted(saved.items()):
             adapter_archive(checkpoint, epoch, args.working)
         state = json.loads((saved[max(saved)] / "trainer_state.json").read_bytes())
@@ -87,9 +101,6 @@ def main():
         if not report_path.exists():
             write_json(report_path, training_metrics(state["log_history"]))
         return
-    if args.mode == "train":
-        prepare(args.working)
-        restore(args.resume, checkpoints)
     command = [sys.executable, str(Path(__file__).with_name("train_step3_pilot.py")), "--runtime", "kaggle",
                "--pairs", str(args.inputs / "orpo-length-matched.jsonl"),
                "--quality-report", str(args.inputs / "quality-report.json"),
@@ -97,6 +108,8 @@ def main():
                "--output-dir", str(checkpoints), "--adapter-output-dir", str(args.working)]
     if args.mode == "validate":
         command.append("--validate-only")
+    if args.single_eot:
+        command.append("--single-eot")
     subprocess.run(command, check=True, env={**os.environ, "CUDA_VISIBLE_DEVICES": "0"})
 
 
