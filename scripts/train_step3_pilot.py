@@ -19,6 +19,7 @@ LR = 4e-5
 BETA = 0.1
 LEGACY_KAGGLE_TRAINER = "69f224bd11387f094bf6cef95026066c685af0920de9b9e0f6d1ca4e64076e50"
 ORIGINAL_PILOT_TRAINER = "1646d2d18c03c46fa33cff659de3cf74ad944aa586c99b30cbc0ca6ed58f3432"
+SINGLE_EOT_PILOT_TRAINER = "27da730efb23ce348f5ee647dae8c768ccd87b07647aa28e4b0107fb23f3e391"
 CHECKPOINT_FILES = {"adapter_model.safetensors", "adapter_config.json", "trainer_state.json",
                     "optimizer.pt", "scheduler.pt", "rng_state.pth", "scaler.pt"}
 
@@ -157,7 +158,10 @@ def main():
     parser.add_argument("--runtime", choices=("colab", "kaggle"), default="colab")
     parser.add_argument("--adapter-output-dir", type=Path)
     parser.add_argument("--single-eot", action="store_true", help="Run the single end-of-turn ablation.")
+    parser.add_argument("--completion-only-nll", action="store_true")
     args = parser.parse_args()
+    if args.completion_only_nll and not args.single_eot:
+        parser.error("--completion-only-nll requires --single-eot.")
     if args.runtime == "kaggle" and args.adapter_output_dir is None and not args.validate_only:
         parser.error("Kaggle runs require --adapter-output-dir.")
     messages = load_pairs(args.pairs, args.quality_report, args.noise_report)
@@ -189,12 +193,18 @@ def main():
                 "noise_sha256": digest(args.noise_report), "script_sha256": digest(Path(__file__))}
     if args.single_eot:
         settings["completion_termination"] = "single-eot"
+    if args.completion_only_nll:
+        settings["chosen_nll"] = "completion-only"
+        settings["completion_only_trainer_sha256"] = digest(Path(__file__).with_name("orpo_completion_only.py"))
     if manifest.exists():
         previous = json.loads(manifest.read_bytes())
         if previous != settings:
             original = {**settings, "script_sha256": ORIGINAL_PILOT_TRAINER}
             legacy = {**settings, "script_sha256": LEGACY_KAGGLE_TRAINER}
-            if not args.single_eot and previous == original:
+            single_eot = {**settings, "script_sha256": SINGLE_EOT_PILOT_TRAINER}
+            if args.single_eot and not args.completion_only_nll and previous == single_eot:
+                write_json(manifest, settings)
+            elif not args.single_eot and previous == original:
                 write_json(manifest, settings)
             elif not args.single_eot and kaggle and previous == legacy and set(complete_checkpoints(args.output_dir)) == {1}:
                 write_json(manifest, settings)
@@ -271,8 +281,12 @@ def main():
                          target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
     if args.single_eot:
         messages = render_single_turn_pairs(messages, tokenizer, maybe_apply_chat_template)
-    trainer = ORPOTrainer(model=model, args=config, processing_class=tokenizer,
-                          train_dataset=Dataset.from_list(messages), peft_config=adapter, callbacks=[MarkComplete()])
+    trainer_class = ORPOTrainer
+    if args.completion_only_nll:
+        from orpo_completion_only import CompletionOnlyORPOTrainer
+        trainer_class = CompletionOnlyORPOTrainer
+    trainer = trainer_class(model=model, args=config, processing_class=tokenizer,
+                            train_dataset=Dataset.from_list(messages), peft_config=adapter, callbacks=[MarkComplete()])
     if args.single_eot:
         verify_single_turn_labels(messages, trainer.train_dataset, tokenizer)
     trainer.train(resume_from_checkpoint=str(available[1]) if 1 in available else None)

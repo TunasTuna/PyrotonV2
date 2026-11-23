@@ -1,0 +1,5144 @@
+{
+  "configuration": {
+    "seed": 42,
+    "threads": 4,
+    "slots": 1,
+    "temperature": 0,
+    "max_new_tokens": 512
+  },
+  "method": {
+    "length": "Generated token counts come from llama.cpp. Visible output is retokenized with the pinned Qwen tokenizer.",
+    "causes": "Reuse prior manual review where available. Otherwise classify the first failing diagnostic, including known unbound import names and import errors.",
+    "statistics": "Exact two-sided McNemar tests use paired verdicts for the same tasks."
+  },
+  "pairs": {
+    "a-1": {
+      "stock": {
+        "dev": {
+          "tasks": 60,
+          "passed": 36,
+          "reference_passed": 37,
+          "wins": 1,
+          "losses": 2,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 0,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 95,
+          "reference_passed": 96,
+          "wins": 6,
+          "losses": 7,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 5,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 131,
+          "reference_passed": 133,
+          "wins": 7,
+          "losses": 9,
+          "exact_mcnemar_p": 0.803619384765625,
+          "win_causes": {
+            "logic": 6,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 4
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      },
+      "old-1": {
+        "dev": {
+          "tasks": 60,
+          "passed": 36,
+          "reference_passed": 35,
+          "wins": 1,
+          "losses": 0,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 0,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": []
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 95,
+          "reference_passed": 98,
+          "wins": 0,
+          "losses": 3,
+          "exact_mcnemar_p": 0.25,
+          "win_causes": {
+            "logic": 0,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 131,
+          "reference_passed": 133,
+          "wins": 1,
+          "losses": 3,
+          "exact_mcnemar_p": 0.625,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      },
+      "old-2": {
+        "dev": {
+          "tasks": 60,
+          "passed": 36,
+          "reference_passed": 34,
+          "wins": 4,
+          "losses": 2,
+          "exact_mcnemar_p": 0.6875,
+          "win_causes": {
+            "logic": 4,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "The candidate decided the sort direction using the minimum and maximum after sorting. The task specifies the first and last elements of the original input."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "The candidate required divisibility by four. Every even integer of at least eight is representable, including 10."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 95,
+          "reference_passed": 99,
+          "wins": 6,
+          "losses": 10,
+          "exact_mcnemar_p": 0.454498291015625,
+          "win_causes": {
+            "logic": 3,
+            "edge case": 1,
+            "missing import": 2,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 7,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 3
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The candidate divided the sum by the input length. The task calls for multiplying the elements before division."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "The candidate used cmath.phase without importing cmath."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 131,
+          "reference_passed": 133,
+          "wins": 10,
+          "losses": 12,
+          "exact_mcnemar_p": 0.8318119049072266,
+          "win_causes": {
+            "logic": 7,
+            "edge case": 1,
+            "missing import": 2,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 8,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 4
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "The candidate decided the sort direction using the minimum and maximum after sorting. The task specifies the first and last elements of the original input."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "The candidate required divisibility by four. Every even integer of at least eight is representable, including 10."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The candidate divided the sum by the input length. The task calls for multiplying the elements before division."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "The candidate used cmath.phase without importing cmath."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "b-1": {
+      "stock": {
+        "dev": {
+          "tasks": 60,
+          "passed": 32,
+          "reference_passed": 37,
+          "wins": 1,
+          "losses": 6,
+          "exact_mcnemar_p": 0.125,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 3
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "Handles the hypotenuse in any argument position."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 98,
+          "reference_passed": 96,
+          "wins": 10,
+          "losses": 8,
+          "exact_mcnemar_p": 0.8145294189453125,
+          "win_causes": {
+            "logic": 8,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 5,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 11,
+          "losses": 14,
+          "exact_mcnemar_p": 0.6900379657745361,
+          "win_causes": {
+            "logic": 9,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 5,
+            "other": 3
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "Handles the hypotenuse in any argument position."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        }
+      },
+      "old-1": {
+        "dev": {
+          "tasks": 60,
+          "passed": 32,
+          "reference_passed": 35,
+          "wins": 1,
+          "losses": 4,
+          "exact_mcnemar_p": 0.375,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 98,
+          "reference_passed": 98,
+          "wins": 6,
+          "losses": 6,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 5,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 7,
+          "losses": 10,
+          "exact_mcnemar_p": 0.629058837890625,
+          "win_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 4,
+            "edge case": 0,
+            "missing import": 5,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        }
+      },
+      "old-2": {
+        "dev": {
+          "tasks": 60,
+          "passed": 32,
+          "reference_passed": 34,
+          "wins": 1,
+          "losses": 3,
+          "exact_mcnemar_p": 0.625,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 98,
+          "reference_passed": 99,
+          "wins": 5,
+          "losses": 6,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 2,
+            "edge case": 2,
+            "missing import": 1,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 6,
+          "losses": 9,
+          "exact_mcnemar_p": 0.60723876953125,
+          "win_causes": {
+            "logic": 3,
+            "edge case": 2,
+            "missing import": 1,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/312",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "a-2": {
+      "stock": {
+        "dev": {
+          "tasks": 60,
+          "passed": 31,
+          "reference_passed": 37,
+          "wins": 1,
+          "losses": 7,
+          "exact_mcnemar_p": 0.0703125,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "Handles the hypotenuse in any argument position."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 99,
+          "reference_passed": 96,
+          "wins": 11,
+          "losses": 8,
+          "exact_mcnemar_p": 0.6476058959960938,
+          "win_causes": {
+            "logic": 9,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 2,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "Searches until the next actual palindrome, including after a palindromic input."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 12,
+          "losses": 15,
+          "exact_mcnemar_p": 0.7011080384254456,
+          "win_causes": {
+            "logic": 10,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 12,
+            "edge case": 0,
+            "missing import": 2,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "Handles the hypotenuse in any argument position."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "Searches until the next actual palindrome, including after a palindromic input."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "Returns the required tuple instead of a list."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      },
+      "old-1": {
+        "dev": {
+          "tasks": 60,
+          "passed": 31,
+          "reference_passed": 35,
+          "wins": 2,
+          "losses": 6,
+          "exact_mcnemar_p": 0.2890625,
+          "win_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "logic",
+                "evidence": "The parser tried to convert the word apples into the orange count on the prompt's first example."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 99,
+          "reference_passed": 98,
+          "wins": 7,
+          "losses": 6,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 4,
+            "edge case": 0,
+            "missing import": 2,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 9,
+          "losses": 12,
+          "exact_mcnemar_p": 0.6636238098144531,
+          "win_causes": {
+            "logic": 8,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 10,
+            "edge case": 0,
+            "missing import": 2,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "logic",
+                "evidence": "The parser tried to convert the word apples into the orange count on the prompt's first example."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      },
+      "old-2": {
+        "dev": {
+          "tasks": 60,
+          "passed": 31,
+          "reference_passed": 34,
+          "wins": 0,
+          "losses": 3,
+          "exact_mcnemar_p": 0.25,
+          "win_causes": {
+            "logic": 0,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "changes": {
+            "wins": [],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 99,
+          "reference_passed": 99,
+          "wins": 2,
+          "losses": 2,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 0,
+            "edge case": 2,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 1,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 2,
+          "losses": 5,
+          "exact_mcnemar_p": 0.453125,
+          "win_causes": {
+            "logic": 0,
+            "edge case": 2,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 4,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 0
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/144",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/149",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "b-2": {
+      "stock": {
+        "dev": {
+          "tasks": 60,
+          "passed": 33,
+          "reference_passed": 37,
+          "wins": 1,
+          "losses": 5,
+          "exact_mcnemar_p": 0.21875,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 3
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 97,
+          "reference_passed": 96,
+          "wins": 9,
+          "losses": 8,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 7,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 10,
+          "losses": 13,
+          "exact_mcnemar_p": 0.6776394844055176,
+          "win_causes": {
+            "logic": 8,
+            "edge case": 1,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 4
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "Uses the centered hexagonal number formula."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/104",
+                "cause": "logic",
+                "evidence": "Removes a redundant list nesting level."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "logic",
+                "evidence": "Verifies divisibility before accepting a solution to the equation."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/170",
+                "cause": "edge case",
+                "evidence": "Preserves empty ranges for reversed endpoints instead of swapping the endpoints."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "Accumulates subsequence values instead of subsequence lengths."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "Applies the longest-palindromic-subsequence recurrence to two-character windows as well."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Fixes the callable signature. The original required an extra delimiter argument."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/446",
+                "cause": "logic",
+                "evidence": "Returns the total occurrence count instead of a dictionary."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/453",
+                "cause": "logic",
+                "evidence": "Restricts the factor sum to even factors."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/37",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/14",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/69",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              }
+            ]
+          }
+        }
+      },
+      "old-1": {
+        "dev": {
+          "tasks": 60,
+          "passed": 33,
+          "reference_passed": 35,
+          "wins": 1,
+          "losses": 3,
+          "exact_mcnemar_p": 0.625,
+          "win_causes": {
+            "logic": 1,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 97,
+          "reference_passed": 98,
+          "wins": 6,
+          "losses": 7,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 7,
+          "losses": 10,
+          "exact_mcnemar_p": 0.629058837890625,
+          "win_causes": {
+            "logic": 6,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 1
+          },
+          "loss_causes": {
+            "logic": 4,
+            "edge case": 0,
+            "missing import": 4,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/86",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/167",
+                "cause": "logic",
+                "evidence": "The candidate added one after computing the next power of two, producing 9 for 5."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/245",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/247",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "logic",
+                "evidence": "The candidate used 10.5 for only the first year. The reference uses 10.5 for each of the first two years."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/421",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/88",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/98",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/252",
+                "cause": "missing import",
+                "evidence": "NameError: name 'cmath' is not defined. Did you forget to import 'cmath'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      },
+      "old-2": {
+        "dev": {
+          "tasks": 60,
+          "passed": 33,
+          "reference_passed": 34,
+          "wins": 3,
+          "losses": 4,
+          "exact_mcnemar_p": 1.0,
+          "win_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 2,
+            "edge case": 0,
+            "missing import": 0,
+            "other": 2
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "The candidate required divisibility by four. Every even integer of at least eight is representable, including 10."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              }
+            ]
+          }
+        },
+        "mbppplus": {
+          "tasks": 162,
+          "passed": 97,
+          "reference_passed": 99,
+          "wins": 5,
+          "losses": 7,
+          "exact_mcnemar_p": 0.7744140625,
+          "win_causes": {
+            "logic": 2,
+            "edge case": 2,
+            "missing import": 1,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 3,
+            "edge case": 0,
+            "missing import": 3,
+            "other": 1
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        },
+        "combined": {
+          "tasks": 222,
+          "passed": 130,
+          "reference_passed": 133,
+          "wins": 8,
+          "losses": 11,
+          "exact_mcnemar_p": 0.6476058959960938,
+          "win_causes": {
+            "logic": 5,
+            "edge case": 2,
+            "missing import": 1,
+            "other": 0
+          },
+          "loss_causes": {
+            "logic": 5,
+            "edge case": 0,
+            "missing import": 3,
+            "other": 3
+          },
+          "changes": {
+            "wins": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/5",
+                "cause": "logic",
+                "evidence": "The recursion inserted a delimiter after the final item as well as between items."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/65",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/138",
+                "cause": "logic",
+                "evidence": "The candidate required divisibility by four. Every even integer of at least eight is representable, including 10."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/59",
+                "cause": "logic",
+                "evidence": "The candidate returned a boolean predicate. The task asks for the numeric value of the nth octagonal number."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/160",
+                "cause": "edge case",
+                "evidence": "The first reported mismatch was on an MBPP+ extra fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/264",
+                "cause": "edge case",
+                "evidence": "The candidate treated zero as invalid and returned a string. The extra fixture expects the reference's numeric zero."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/388",
+                "cause": "missing import",
+                "evidence": "The candidate used math.log2 without importing math."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/432",
+                "cause": "logic",
+                "evidence": "The candidate included the height in the median calculation, which averages the two bases."
+              }
+            ],
+            "losses": [
+              {
+                "suite": "dev",
+                "id": "HumanEval/9",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/67",
+                "cause": "other",
+                "evidence": "The scorer reported an error without identifying its input fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/100",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "dev",
+                "id": "HumanEval/157",
+                "cause": "logic",
+                "evidence": "A result differed from the reference on the first reported fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/100",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/109",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/162",
+                "cause": "other",
+                "evidence": "Load, interface, or execution failure."
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/233",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/276",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/293",
+                "cause": "missing import",
+                "evidence": "NameError: name 'math' is not defined. Did you forget to import 'math'?"
+              },
+              {
+                "suite": "mbppplus",
+                "id": "Mbpp/470",
+                "cause": "logic",
+                "evidence": "The first reported mismatch was on an original MBPP fixture."
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "lengths": {
+    "stock": {
+      "dev": {
+        "generated": {
+          "median": 105.0,
+          "mean": 122.68333333333334
+        },
+        "visible_total": {
+          "median": 104.0,
+          "mean": 121.68333333333334
+        },
+        "docstring": {
+          "median": 20.5,
+          "mean": 50.766666666666666
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.45
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 5.083333333333333
+        },
+        "code": {
+          "median": 57.5,
+          "mean": 58.38333333333333
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 62.5,
+          "mean": 72.5679012345679
+        },
+        "visible_total": {
+          "median": 61.5,
+          "mean": 71.5679012345679
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 6.925925925925926
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 13.796296296296296
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4
+        },
+        "code": {
+          "median": 35.0,
+          "mean": 46.84567901234568
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 73.5,
+          "mean": 86.11261261261261
+        },
+        "visible_total": {
+          "median": 72.5,
+          "mean": 85.11261261261261
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 18.774774774774773
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 12.08108108108108
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4.292792792792793
+        },
+        "code": {
+          "median": 37.0,
+          "mean": 49.96396396396396
+        }
+      }
+    },
+    "old-1": {
+      "dev": {
+        "generated": {
+          "median": 100.0,
+          "mean": 121.01666666666667
+        },
+        "visible_total": {
+          "median": 99.0,
+          "mean": 120.01666666666667
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 49.05
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.9
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 5.416666666666667
+        },
+        "code": {
+          "median": 59.0,
+          "mean": 57.65
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 36.5,
+          "mean": 57.666666666666664
+        },
+        "visible_total": {
+          "median": 35.5,
+          "mean": 56.666666666666664
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 2.185185185185185
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 8.351851851851851
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4
+        },
+        "code": {
+          "median": 28.0,
+          "mean": 42.129629629629626
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 54.5,
+          "mean": 74.78828828828829
+        },
+        "visible_total": {
+          "median": 53.5,
+          "mean": 73.78828828828829
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 14.85135135135135
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 8.22972972972973
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4.382882882882883
+        },
+        "code": {
+          "median": 34.5,
+          "mean": 46.32432432432432
+        }
+      }
+    },
+    "a-1": {
+      "dev": {
+        "generated": {
+          "median": 97.5,
+          "mean": 114.93333333333334
+        },
+        "visible_total": {
+          "median": 96.5,
+          "mean": 113.93333333333334
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 43.88333333333333
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.733333333333333
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 5.416666666666667
+        },
+        "code": {
+          "median": 58.0,
+          "mean": 56.9
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 36.0,
+          "mean": 55.80864197530864
+        },
+        "visible_total": {
+          "median": 35.0,
+          "mean": 54.80864197530864
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 2.185185185185185
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.54320987654321
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4
+        },
+        "code": {
+          "median": 28.0,
+          "mean": 41.08024691358025
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 54.0,
+          "mean": 71.78828828828829
+        },
+        "visible_total": {
+          "median": 53.0,
+          "mean": 70.78828828828829
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 13.454954954954955
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.594594594594595
+        },
+        "prose": {
+          "median": 4.0,
+          "mean": 4.382882882882883
+        },
+        "code": {
+          "median": 34.0,
+          "mean": 45.35585585585586
+        }
+      }
+    },
+    "b-1": {
+      "dev": {
+        "generated": {
+          "median": 60.0,
+          "mean": 79
+        },
+        "visible_total": {
+          "median": 59.0,
+          "mean": 78
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 18.35
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 4.633333333333334
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0.3333333333333333
+        },
+        "code": {
+          "median": 52.5,
+          "mean": 54.68333333333333
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 27.0,
+          "mean": 47.75308641975309
+        },
+        "visible_total": {
+          "median": 26.0,
+          "mean": 46.75308641975309
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 0.36419753086419754
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 6.209876543209877
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0
+        },
+        "code": {
+          "median": 26.0,
+          "mean": 40.17901234567901
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 33.5,
+          "mean": 56.1981981981982
+        },
+        "visible_total": {
+          "median": 32.5,
+          "mean": 55.1981981981982
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 5.225225225225225
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 5.783783783783784
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0.09009009009009009
+        },
+        "code": {
+          "median": 29.0,
+          "mean": 44.0990990990991
+        }
+      }
+    },
+    "old-2": {
+      "dev": {
+        "generated": {
+          "median": 127.0,
+          "mean": 126.01666666666667
+        },
+        "visible_total": {
+          "median": 126.0,
+          "mean": 125.01666666666667
+        },
+        "docstring": {
+          "median": 57.0,
+          "mean": 62.6
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 3.95
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 4.3
+        },
+        "code": {
+          "median": 48.5,
+          "mean": 54.166666666666664
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 27.5,
+          "mean": 44.77160493827161
+        },
+        "visible_total": {
+          "median": 26.5,
+          "mean": 43.77777777777778
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 0.25308641975308643
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 2.888888888888889
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0.8641975308641975
+        },
+        "code": {
+          "median": 25.0,
+          "mean": 39.77160493827161
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 35.0,
+          "mean": 66.72972972972973
+        },
+        "visible_total": {
+          "median": 34.0,
+          "mean": 65.73423423423424
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 17.103603603603602
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 3.175675675675676
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 1.7927927927927927
+        },
+        "code": {
+          "median": 28.0,
+          "mean": 43.66216216216216
+        }
+      }
+    },
+    "a-2": {
+      "dev": {
+        "generated": {
+          "median": 120.0,
+          "mean": 125.5
+        },
+        "visible_total": {
+          "median": 119.0,
+          "mean": 124.5
+        },
+        "docstring": {
+          "median": 46.5,
+          "mean": 58.96666666666667
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 4.733333333333333
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 3.433333333333333
+        },
+        "code": {
+          "median": 46.5,
+          "mean": 57.36666666666667
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 27.0,
+          "mean": 44.08024691358025
+        },
+        "visible_total": {
+          "median": 26.0,
+          "mean": 43.08641975308642
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 0.32098765432098764
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 2.6790123456790123
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0.691358024691358
+        },
+        "code": {
+          "median": 24.0,
+          "mean": 39.39506172839506
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 33.0,
+          "mean": 66.08558558558559
+        },
+        "visible_total": {
+          "median": 32.0,
+          "mean": 65.09009009009009
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 16.17117117117117
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 3.234234234234234
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 1.4324324324324325
+        },
+        "code": {
+          "median": 28.0,
+          "mean": 44.252252252252255
+        }
+      }
+    },
+    "b-2": {
+      "dev": {
+        "generated": {
+          "median": 58.0,
+          "mean": 77.41666666666667
+        },
+        "visible_total": {
+          "median": 57.0,
+          "mean": 76.41666666666667
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 19.4
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 3.033333333333333
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0
+        },
+        "code": {
+          "median": 49.0,
+          "mean": 53.983333333333334
+        }
+      },
+      "mbppplus": {
+        "generated": {
+          "median": 29.0,
+          "mean": 49.5679012345679
+        },
+        "visible_total": {
+          "median": 28.0,
+          "mean": 48.5679012345679
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 0
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 7.092592592592593
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0
+        },
+        "code": {
+          "median": 27.0,
+          "mean": 41.47530864197531
+        }
+      },
+      "combined": {
+        "generated": {
+          "median": 37.0,
+          "mean": 57.0945945945946
+        },
+        "visible_total": {
+          "median": 36.0,
+          "mean": 56.0945945945946
+        },
+        "docstring": {
+          "median": 0.0,
+          "mean": 5.243243243243243
+        },
+        "comments": {
+          "median": 0.0,
+          "mean": 5.995495495495495
+        },
+        "prose": {
+          "median": 0.0,
+          "mean": 0
+        },
+        "code": {
+          "median": 31.0,
+          "mean": 44.85585585585586
+        }
+      }
+    }
+  },
+  "training": {
+    "old": {
+      "first_step": {
+        "step": 1,
+        "epoch": 0.0449438202247191,
+        "loss": 2.6268,
+        "chosen_nll": 2.557067394256592,
+        "reward_margin": 0.0005134204402565956
+      },
+      "mean_margin_by_epoch": [
+        0.004239437676480283,
+        0.004382123467107506
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "epoch": 0.0449438202247191,
+          "loss": 2.6268,
+          "chosen_nll": 2.557067394256592,
+          "reward_margin": 0.0005134204402565956
+        },
+        {
+          "step": 2,
+          "epoch": 0.0898876404494382,
+          "loss": 1.9246,
+          "chosen_nll": 1.863188624382019,
+          "reward_margin": 0.004921773914247751
+        },
+        {
+          "step": 3,
+          "epoch": 0.1348314606741573,
+          "loss": 2.3496,
+          "chosen_nll": 2.284762382507324,
+          "reward_margin": 0.003996829502284527
+        },
+        {
+          "step": 4,
+          "epoch": 0.1797752808988764,
+          "loss": 1.8237,
+          "chosen_nll": 1.7679872512817383,
+          "reward_margin": 0.011519080027937889
+        },
+        {
+          "step": 5,
+          "epoch": 0.2247191011235955,
+          "loss": 2.34,
+          "chosen_nll": 2.2574896812438965,
+          "reward_margin": -0.006175728514790535
+        },
+        {
+          "step": 6,
+          "epoch": 0.2696629213483146,
+          "loss": 2.4336,
+          "chosen_nll": 2.366558313369751,
+          "reward_margin": 0.0018762792460620403
+        },
+        {
+          "step": 7,
+          "epoch": 0.3146067415730337,
+          "loss": 1.9084,
+          "chosen_nll": 1.8268219232559204,
+          "reward_margin": -0.006033039186149836
+        },
+        {
+          "step": 8,
+          "epoch": 0.3595505617977528,
+          "loss": 1.9455,
+          "chosen_nll": 1.883409857749939,
+          "reward_margin": 0.004243975039571524
+        },
+        {
+          "step": 9,
+          "epoch": 0.4044943820224719,
+          "loss": 2.9744,
+          "chosen_nll": 2.906158924102783,
+          "reward_margin": 0.00016029877588152885
+        },
+        {
+          "step": 10,
+          "epoch": 0.449438202247191,
+          "loss": 1.7809,
+          "chosen_nll": 1.7128615379333496,
+          "reward_margin": 0.0012265359982848167
+        },
+        {
+          "step": 11,
+          "epoch": 0.4943820224719101,
+          "loss": 2.2871,
+          "chosen_nll": 2.221829414367676,
+          "reward_margin": 0.00226677767932415
+        },
+        {
+          "step": 12,
+          "epoch": 0.5393258426966292,
+          "loss": 2.1082,
+          "chosen_nll": 2.0436463356018066,
+          "reward_margin": 0.00331983994692564
+        },
+        {
+          "step": 13,
+          "epoch": 0.5842696629213483,
+          "loss": 1.7212,
+          "chosen_nll": 1.6577532291412354,
+          "reward_margin": 0.0022918458562344313
+        },
+        {
+          "step": 14,
+          "epoch": 0.6292134831460674,
+          "loss": 2.223,
+          "chosen_nll": 2.162416458129883,
+          "reward_margin": 0.009178785607218742
+        },
+        {
+          "step": 15,
+          "epoch": 0.6741573033707865,
+          "loss": 2.1627,
+          "chosen_nll": 2.1091229915618896,
+          "reward_margin": 0.010028984397649765
+        },
+        {
+          "step": 16,
+          "epoch": 0.7191011235955056,
+          "loss": 1.9511,
+          "chosen_nll": 1.8962273597717285,
+          "reward_margin": 0.011239081621170044
+        },
+        {
+          "step": 17,
+          "epoch": 0.7640449438202247,
+          "loss": 2.1531,
+          "chosen_nll": 2.0868453979492188,
+          "reward_margin": 0.0037739635445177555
+        },
+        {
+          "step": 18,
+          "epoch": 0.8089887640449438,
+          "loss": 2.3591,
+          "chosen_nll": 2.3022966384887695,
+          "reward_margin": 0.009013725444674492
+        },
+        {
+          "step": 19,
+          "epoch": 0.8539325842696629,
+          "loss": 2.1147,
+          "chosen_nll": 2.0519707202911377,
+          "reward_margin": 0.004708140157163143
+        },
+        {
+          "step": 20,
+          "epoch": 0.898876404494382,
+          "loss": 1.2943,
+          "chosen_nll": 1.23350191116333,
+          "reward_margin": 0.004423127043992281
+        },
+        {
+          "step": 21,
+          "epoch": 0.9438202247191011,
+          "loss": 1.7777,
+          "chosen_nll": 1.7215572595596313,
+          "reward_margin": 0.010138447396457195
+        },
+        {
+          "step": 22,
+          "epoch": 0.9887640449438202,
+          "loss": 1.4632,
+          "chosen_nll": 1.393958568572998,
+          "reward_margin": 0.0008731440175324678
+        },
+        {
+          "step": 23,
+          "epoch": 1.0,
+          "loss": 2.147,
+          "chosen_nll": 2.0922250747680664,
+          "reward_margin": 0.010001778602600098
+        },
+        {
+          "step": 24,
+          "epoch": 1.0449438202247192,
+          "loss": 1.8654,
+          "chosen_nll": 1.8071811199188232,
+          "reward_margin": 0.006061963737010956
+        },
+        {
+          "step": 25,
+          "epoch": 1.0898876404494382,
+          "loss": 1.7387,
+          "chosen_nll": 1.6736178398132324,
+          "reward_margin": 0.002419696655124426
+        },
+        {
+          "step": 26,
+          "epoch": 1.1348314606741572,
+          "loss": 1.8868,
+          "chosen_nll": 1.8270893096923828,
+          "reward_margin": 0.006175516173243523
+        },
+        {
+          "step": 27,
+          "epoch": 1.1797752808988764,
+          "loss": 1.8705,
+          "chosen_nll": 1.8052194118499756,
+          "reward_margin": 0.002349712885916233
+        },
+        {
+          "step": 28,
+          "epoch": 1.2247191011235956,
+          "loss": 2.015,
+          "chosen_nll": 1.9600417613983154,
+          "reward_margin": 0.00804402120411396
+        },
+        {
+          "step": 29,
+          "epoch": 1.2696629213483146,
+          "loss": 1.662,
+          "chosen_nll": 1.6048009395599365,
+          "reward_margin": 0.0068061924539506435
+        },
+        {
+          "step": 30,
+          "epoch": 1.3146067415730336,
+          "loss": 1.8243,
+          "chosen_nll": 1.7685143947601318,
+          "reward_margin": 0.006551540456712246
+        },
+        {
+          "step": 31,
+          "epoch": 1.3595505617977528,
+          "loss": 2.2536,
+          "chosen_nll": 2.2010576725006104,
+          "reward_margin": 0.009557124227285385
+        },
+        {
+          "step": 32,
+          "epoch": 1.404494382022472,
+          "loss": 1.5013,
+          "chosen_nll": 1.439527988433838,
+          "reward_margin": 0.0031853404361754656
+        },
+        {
+          "step": 33,
+          "epoch": 1.449438202247191,
+          "loss": 1.8146,
+          "chosen_nll": 1.757517695426941,
+          "reward_margin": 0.007268649525940418
+        },
+        {
+          "step": 34,
+          "epoch": 1.49438202247191,
+          "loss": 1.245,
+          "chosen_nll": 1.181739330291748,
+          "reward_margin": 0.0021535861305892467
+        },
+        {
+          "step": 35,
+          "epoch": 1.5393258426966292,
+          "loss": 1.7248,
+          "chosen_nll": 1.6811025142669678,
+          "reward_margin": 0.012577144429087639
+        },
+        {
+          "step": 36,
+          "epoch": 1.5842696629213484,
+          "loss": 2.0426,
+          "chosen_nll": 1.9788336753845215,
+          "reward_margin": 0.003787560388445854
+        },
+        {
+          "step": 37,
+          "epoch": 1.6292134831460674,
+          "loss": 1.7684,
+          "chosen_nll": 1.7060129642486572,
+          "reward_margin": 0.002709220862016082
+        },
+        {
+          "step": 38,
+          "epoch": 1.6741573033707864,
+          "loss": 1.4945,
+          "chosen_nll": 1.4285614490509033,
+          "reward_margin": 0.001480325125157833
+        },
+        {
+          "step": 39,
+          "epoch": 1.7191011235955056,
+          "loss": 1.696,
+          "chosen_nll": 1.626144289970398,
+          "reward_margin": 0.003425676841288805
+        },
+        {
+          "step": 40,
+          "epoch": 1.7640449438202248,
+          "loss": 1.1333,
+          "chosen_nll": 1.0698022842407227,
+          "reward_margin": 0.0025582779198884964
+        },
+        {
+          "step": 41,
+          "epoch": 1.8089887640449438,
+          "loss": 2.1784,
+          "chosen_nll": 2.135502815246582,
+          "reward_margin": 0.01926838792860508
+        },
+        {
+          "step": 42,
+          "epoch": 1.8539325842696628,
+          "loss": 1.4331,
+          "chosen_nll": 1.3650753498077393,
+          "reward_margin": 0.0011127940379083157
+        },
+        {
+          "step": 43,
+          "epoch": 1.898876404494382,
+          "loss": 1.6042,
+          "chosen_nll": 1.5057272911071777,
+          "reward_margin": -0.012997820973396301
+        },
+        {
+          "step": 44,
+          "epoch": 1.9438202247191012,
+          "loss": 1.3423,
+          "chosen_nll": 1.278780221939087,
+          "reward_margin": 0.004257349297404289
+        },
+        {
+          "step": 45,
+          "epoch": 1.9887640449438202,
+          "loss": 1.6977,
+          "chosen_nll": 1.6315698623657227,
+          "reward_margin": 0.0017422112869098783
+        },
+        {
+          "step": 46,
+          "epoch": 2.0,
+          "loss": 1.5733,
+          "chosen_nll": 1.5062607526779175,
+          "reward_margin": 0.000294368714094162
+        }
+      ]
+    },
+    "a": {
+      "first_step": {
+        "step": 1,
+        "epoch": 0.0449438202247191,
+        "loss": 2.5753,
+        "chosen_nll": 2.506673812866211,
+        "reward_margin": 0.0014274329878389835
+      },
+      "mean_margin_by_epoch": [
+        0.0045901779743397365,
+        0.004480199002579827
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "epoch": 0.0449438202247191,
+          "loss": 2.5753,
+          "chosen_nll": 2.506673812866211,
+          "reward_margin": 0.0014274329878389835
+        },
+        {
+          "step": 2,
+          "epoch": 0.0898876404494382,
+          "loss": 1.8798,
+          "chosen_nll": 1.8193397521972656,
+          "reward_margin": 0.004810807760804892
+        },
+        {
+          "step": 3,
+          "epoch": 0.1348314606741573,
+          "loss": 2.2946,
+          "chosen_nll": 2.233823299407959,
+          "reward_margin": 0.005555853247642517
+        },
+        {
+          "step": 4,
+          "epoch": 0.1797752808988764,
+          "loss": 1.7845,
+          "chosen_nll": 1.728554606437683,
+          "reward_margin": 0.009806036949157715
+        },
+        {
+          "step": 5,
+          "epoch": 0.2247191011235955,
+          "loss": 2.2974,
+          "chosen_nll": 2.210008382797241,
+          "reward_margin": -0.0060385349206626415
+        },
+        {
+          "step": 6,
+          "epoch": 0.2696629213483146,
+          "loss": 2.386,
+          "chosen_nll": 2.3215720653533936,
+          "reward_margin": 0.0020577162504196167
+        },
+        {
+          "step": 7,
+          "epoch": 0.3146067415730337,
+          "loss": 1.8675,
+          "chosen_nll": 1.7849135398864746,
+          "reward_margin": -0.005747260991483927
+        },
+        {
+          "step": 8,
+          "epoch": 0.3595505617977528,
+          "loss": 1.9062,
+          "chosen_nll": 1.845186710357666,
+          "reward_margin": 0.004044620785862207
+        },
+        {
+          "step": 9,
+          "epoch": 0.4044943820224719,
+          "loss": 2.9363,
+          "chosen_nll": 2.8685429096221924,
+          "reward_margin": -5.455035716295242e-05
+        },
+        {
+          "step": 10,
+          "epoch": 0.449438202247191,
+          "loss": 1.7403,
+          "chosen_nll": 1.6743273735046387,
+          "reward_margin": 0.0014335340820252895
+        },
+        {
+          "step": 11,
+          "epoch": 0.4943820224719101,
+          "loss": 2.2441,
+          "chosen_nll": 2.180607795715332,
+          "reward_margin": 0.0022758804261684418
+        },
+        {
+          "step": 12,
+          "epoch": 0.5393258426966292,
+          "loss": 2.069,
+          "chosen_nll": 2.005798578262329,
+          "reward_margin": 0.0034077325835824013
+        },
+        {
+          "step": 13,
+          "epoch": 0.5842696629213483,
+          "loss": 1.6918,
+          "chosen_nll": 1.6295241117477417,
+          "reward_margin": 0.0023489927407354116
+        },
+        {
+          "step": 14,
+          "epoch": 0.6292134831460674,
+          "loss": 2.1891,
+          "chosen_nll": 2.129730701446533,
+          "reward_margin": 0.00948528666049242
+        },
+        {
+          "step": 15,
+          "epoch": 0.6741573033707865,
+          "loss": 2.1161,
+          "chosen_nll": 2.069941520690918,
+          "reward_margin": 0.009923306293785572
+        },
+        {
+          "step": 16,
+          "epoch": 0.7191011235955056,
+          "loss": 1.9101,
+          "chosen_nll": 1.8579199314117432,
+          "reward_margin": 0.011237667873501778
+        },
+        {
+          "step": 17,
+          "epoch": 0.7640449438202247,
+          "loss": 2.1113,
+          "chosen_nll": 2.0481133460998535,
+          "reward_margin": 0.00564117357134819
+        },
+        {
+          "step": 18,
+          "epoch": 0.8089887640449438,
+          "loss": 2.3207,
+          "chosen_nll": 2.2686946392059326,
+          "reward_margin": 0.009560368955135345
+        },
+        {
+          "step": 19,
+          "epoch": 0.8539325842696629,
+          "loss": 2.0945,
+          "chosen_nll": 2.0349831581115723,
+          "reward_margin": 0.006027382332831621
+        },
+        {
+          "step": 20,
+          "epoch": 0.898876404494382,
+          "loss": 1.2689,
+          "chosen_nll": 1.2105711698532104,
+          "reward_margin": 0.00539608346298337
+        },
+        {
+          "step": 21,
+          "epoch": 0.9438202247191011,
+          "loss": 1.7555,
+          "chosen_nll": 1.6996715068817139,
+          "reward_margin": 0.009482160210609436
+        },
+        {
+          "step": 22,
+          "epoch": 0.9887640449438202,
+          "loss": 1.4425,
+          "chosen_nll": 1.3761790990829468,
+          "reward_margin": 0.0014510665787383914
+        },
+        {
+          "step": 23,
+          "epoch": 1.0,
+          "loss": 2.129,
+          "chosen_nll": 2.078744411468506,
+          "reward_margin": 0.012041335925459862
+        },
+        {
+          "step": 24,
+          "epoch": 1.0449438202247192,
+          "loss": 1.8561,
+          "chosen_nll": 1.799479603767395,
+          "reward_margin": 0.005977205000817776
+        },
+        {
+          "step": 25,
+          "epoch": 1.0898876404494382,
+          "loss": 1.7259,
+          "chosen_nll": 1.6604326963424683,
+          "reward_margin": 0.001829612534493208
+        },
+        {
+          "step": 26,
+          "epoch": 1.1348314606741572,
+          "loss": 1.8831,
+          "chosen_nll": 1.8228250741958618,
+          "reward_margin": 0.004476264584809542
+        },
+        {
+          "step": 27,
+          "epoch": 1.1797752808988764,
+          "loss": 1.8653,
+          "chosen_nll": 1.7978167533874512,
+          "reward_margin": 0.00113607756793499
+        },
+        {
+          "step": 28,
+          "epoch": 1.2247191011235956,
+          "loss": 1.9988,
+          "chosen_nll": 1.9508706331253052,
+          "reward_margin": 0.009687097743153572
+        },
+        {
+          "step": 29,
+          "epoch": 1.2696629213483146,
+          "loss": 1.6566,
+          "chosen_nll": 1.6013303995132446,
+          "reward_margin": 0.007424809038639069
+        },
+        {
+          "step": 30,
+          "epoch": 1.3146067415730336,
+          "loss": 1.8168,
+          "chosen_nll": 1.7645825147628784,
+          "reward_margin": 0.006750364787876606
+        },
+        {
+          "step": 31,
+          "epoch": 1.3595505617977528,
+          "loss": 2.2475,
+          "chosen_nll": 2.199028491973877,
+          "reward_margin": 0.010010754689574242
+        },
+        {
+          "step": 32,
+          "epoch": 1.404494382022472,
+          "loss": 1.4937,
+          "chosen_nll": 1.4319214820861816,
+          "reward_margin": 0.0034142404329031706
+        },
+        {
+          "step": 33,
+          "epoch": 1.449438202247191,
+          "loss": 1.8049,
+          "chosen_nll": 1.7515705823898315,
+          "reward_margin": 0.008496103808283806
+        },
+        {
+          "step": 34,
+          "epoch": 1.49438202247191,
+          "loss": 1.2387,
+          "chosen_nll": 1.175696849822998,
+          "reward_margin": 0.0022003292106091976
+        },
+        {
+          "step": 35,
+          "epoch": 1.5393258426966292,
+          "loss": 1.7217,
+          "chosen_nll": 1.6783404350280762,
+          "reward_margin": 0.011921457946300507
+        },
+        {
+          "step": 36,
+          "epoch": 1.5842696629213484,
+          "loss": 2.0487,
+          "chosen_nll": 1.9838441610336304,
+          "reward_margin": 0.003336128778755665
+        },
+        {
+          "step": 37,
+          "epoch": 1.6292134831460674,
+          "loss": 1.7626,
+          "chosen_nll": 1.7017080783843994,
+          "reward_margin": 0.0029889242723584175
+        },
+        {
+          "step": 38,
+          "epoch": 1.6741573033707864,
+          "loss": 1.49,
+          "chosen_nll": 1.4240686893463135,
+          "reward_margin": 0.001469787210226059
+        },
+        {
+          "step": 39,
+          "epoch": 1.7191011235955056,
+          "loss": 1.6927,
+          "chosen_nll": 1.6233259439468384,
+          "reward_margin": 0.0034524546936154366
+        },
+        {
+          "step": 40,
+          "epoch": 1.7640449438202248,
+          "loss": 1.1279,
+          "chosen_nll": 1.0641603469848633,
+          "reward_margin": 0.00243939645588398
+        },
+        {
+          "step": 41,
+          "epoch": 1.8089887640449438,
+          "loss": 2.1817,
+          "chosen_nll": 2.1405651569366455,
+          "reward_margin": 0.020196177065372467
+        },
+        {
+          "step": 42,
+          "epoch": 1.8539325842696628,
+          "loss": 1.4253,
+          "chosen_nll": 1.3580715656280518,
+          "reward_margin": 0.0015466837212443352
+        },
+        {
+          "step": 43,
+          "epoch": 1.898876404494382,
+          "loss": 1.5995,
+          "chosen_nll": 1.5000779628753662,
+          "reward_margin": -0.013291679322719574
+        },
+        {
+          "step": 44,
+          "epoch": 1.9438202247191012,
+          "loss": 1.3317,
+          "chosen_nll": 1.2690198421478271,
+          "reward_margin": 0.004672436974942684
+        },
+        {
+          "step": 45,
+          "epoch": 1.9887640449438202,
+          "loss": 1.6939,
+          "chosen_nll": 1.6281193494796753,
+          "reward_margin": 0.0018721803789958358
+        },
+        {
+          "step": 46,
+          "epoch": 2.0,
+          "loss": 1.5588,
+          "chosen_nll": 1.4980871677398682,
+          "reward_margin": 0.0010377694852650166
+        }
+      ]
+    },
+    "b": {
+      "first_step": {
+        "step": 1,
+        "epoch": 0.0449438202247191,
+        "loss": 0.3857,
+        "chosen_nll": 0.3170921802520752,
+        "reward_margin": 0.0014274329878389835
+      },
+      "mean_margin_by_epoch": [
+        0.004659327394936396,
+        0.004983650702659203
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "epoch": 0.0449438202247191,
+          "loss": 0.3857,
+          "chosen_nll": 0.3170921802520752,
+          "reward_margin": 0.0014274329878389835
+        },
+        {
+          "step": 2,
+          "epoch": 0.0898876404494382,
+          "loss": 0.3305,
+          "chosen_nll": 0.27012044191360474,
+          "reward_margin": 0.004807496443390846
+        },
+        {
+          "step": 3,
+          "epoch": 0.1348314606741573,
+          "loss": 0.2924,
+          "chosen_nll": 0.23216265439987183,
+          "reward_margin": 0.0056829568929970264
+        },
+        {
+          "step": 4,
+          "epoch": 0.1797752808988764,
+          "loss": 0.3803,
+          "chosen_nll": 0.32468289136886597,
+          "reward_margin": 0.0099558774381876
+        },
+        {
+          "step": 5,
+          "epoch": 0.2247191011235955,
+          "loss": 0.389,
+          "chosen_nll": 0.2999309003353119,
+          "reward_margin": -0.0060507915914058685
+        },
+        {
+          "step": 6,
+          "epoch": 0.2696629213483146,
+          "loss": 0.3719,
+          "chosen_nll": 0.30897605419158936,
+          "reward_margin": 0.002207520417869091
+        },
+        {
+          "step": 7,
+          "epoch": 0.3146067415730337,
+          "loss": 0.424,
+          "chosen_nll": 0.3401426672935486,
+          "reward_margin": -0.005945555400103331
+        },
+        {
+          "step": 8,
+          "epoch": 0.3595505617977528,
+          "loss": 0.2918,
+          "chosen_nll": 0.23147259652614594,
+          "reward_margin": 0.003965248353779316
+        },
+        {
+          "step": 9,
+          "epoch": 0.4044943820224719,
+          "loss": 0.5093,
+          "chosen_nll": 0.44219619035720825,
+          "reward_margin": -0.0003176650498062372
+        },
+        {
+          "step": 10,
+          "epoch": 0.449438202247191,
+          "loss": 0.284,
+          "chosen_nll": 0.21912485361099243,
+          "reward_margin": 0.0012432527728378773
+        },
+        {
+          "step": 11,
+          "epoch": 0.4943820224719101,
+          "loss": 0.3322,
+          "chosen_nll": 0.27002787590026855,
+          "reward_margin": 0.0018980235327035189
+        },
+        {
+          "step": 12,
+          "epoch": 0.5393258426966292,
+          "loss": 0.3554,
+          "chosen_nll": 0.2940847873687744,
+          "reward_margin": 0.004175596870481968
+        },
+        {
+          "step": 13,
+          "epoch": 0.5842696629213483,
+          "loss": 0.261,
+          "chosen_nll": 0.2043759822845459,
+          "reward_margin": 0.004111184738576412
+        },
+        {
+          "step": 14,
+          "epoch": 0.6292134831460674,
+          "loss": 0.2842,
+          "chosen_nll": 0.22737517952919006,
+          "reward_margin": 0.010211307555437088
+        },
+        {
+          "step": 15,
+          "epoch": 0.6741573033707865,
+          "loss": 0.14,
+          "chosen_nll": 0.1000971719622612,
+          "reward_margin": 0.010091409087181091
+        },
+        {
+          "step": 16,
+          "epoch": 0.7191011235955056,
+          "loss": 0.297,
+          "chosen_nll": 0.24634060263633728,
+          "reward_margin": 0.011394226923584938
+        },
+        {
+          "step": 17,
+          "epoch": 0.7640449438202247,
+          "loss": 0.2844,
+          "chosen_nll": 0.2240036129951477,
+          "reward_margin": 0.006044128909707069
+        },
+        {
+          "step": 18,
+          "epoch": 0.8089887640449438,
+          "loss": 0.1827,
+          "chosen_nll": 0.1322280615568161,
+          "reward_margin": 0.008181032724678516
+        },
+        {
+          "step": 19,
+          "epoch": 0.8539325842696629,
+          "loss": 0.263,
+          "chosen_nll": 0.20439381897449493,
+          "reward_margin": 0.0059929233975708485
+        },
+        {
+          "step": 20,
+          "epoch": 0.898876404494382,
+          "loss": 0.2713,
+          "chosen_nll": 0.21271106600761414,
+          "reward_margin": 0.005042468197643757
+        },
+        {
+          "step": 21,
+          "epoch": 0.9438202247191011,
+          "loss": 0.3318,
+          "chosen_nll": 0.27790868282318115,
+          "reward_margin": 0.009958826005458832
+        },
+        {
+          "step": 22,
+          "epoch": 0.9887640449438202,
+          "loss": 0.2476,
+          "chosen_nll": 0.1815386265516281,
+          "reward_margin": 0.0014379569329321384
+        },
+        {
+          "step": 23,
+          "epoch": 1.0,
+          "loss": 0.2959,
+          "chosen_nll": 0.24655242264270782,
+          "reward_margin": 0.01164967194199562
+        },
+        {
+          "step": 24,
+          "epoch": 1.0449438202247192,
+          "loss": 0.2363,
+          "chosen_nll": 0.18114401400089264,
+          "reward_margin": 0.005283458158373833
+        },
+        {
+          "step": 25,
+          "epoch": 1.0898876404494382,
+          "loss": 0.3099,
+          "chosen_nll": 0.2477448284626007,
+          "reward_margin": 0.003338659182190895
+        },
+        {
+          "step": 26,
+          "epoch": 1.1348314606741572,
+          "loss": 0.2464,
+          "chosen_nll": 0.19295983016490936,
+          "reward_margin": 0.00563770579174161
+        },
+        {
+          "step": 27,
+          "epoch": 1.1797752808988764,
+          "loss": 0.2846,
+          "chosen_nll": 0.22019731998443604,
+          "reward_margin": 0.0022729113698005676
+        },
+        {
+          "step": 28,
+          "epoch": 1.2247191011235956,
+          "loss": 0.1818,
+          "chosen_nll": 0.1384401023387909,
+          "reward_margin": 0.010461902245879173
+        },
+        {
+          "step": 29,
+          "epoch": 1.2696629213483146,
+          "loss": 0.2644,
+          "chosen_nll": 0.2126486450433731,
+          "reward_margin": 0.008440347388386726
+        },
+        {
+          "step": 30,
+          "epoch": 1.3146067415730336,
+          "loss": 0.1921,
+          "chosen_nll": 0.14305046200752258,
+          "reward_margin": 0.007535384502261877
+        },
+        {
+          "step": 31,
+          "epoch": 1.3595505617977528,
+          "loss": 0.1698,
+          "chosen_nll": 0.12510240077972412,
+          "reward_margin": 0.010492615401744843
+        },
+        {
+          "step": 32,
+          "epoch": 1.404494382022472,
+          "loss": 0.2051,
+          "chosen_nll": 0.14290204644203186,
+          "reward_margin": 0.0030287550762295723
+        },
+        {
+          "step": 33,
+          "epoch": 1.449438202247191,
+          "loss": 0.2012,
+          "chosen_nll": 0.15096008777618408,
+          "reward_margin": 0.008485956117510796
+        },
+        {
+          "step": 34,
+          "epoch": 1.49438202247191,
+          "loss": 0.2023,
+          "chosen_nll": 0.14042989909648895,
+          "reward_margin": 0.0024468747433274984
+        },
+        {
+          "step": 35,
+          "epoch": 1.5393258426966292,
+          "loss": 0.1775,
+          "chosen_nll": 0.14035725593566895,
+          "reward_margin": 0.013186533004045486
+        },
+        {
+          "step": 36,
+          "epoch": 1.5842696629213484,
+          "loss": 0.2769,
+          "chosen_nll": 0.20592829585075378,
+          "reward_margin": 0.0036575731355696917
+        },
+        {
+          "step": 37,
+          "epoch": 1.6292134831460674,
+          "loss": 0.2919,
+          "chosen_nll": 0.234379380941391,
+          "reward_margin": 0.004609616938978434
+        },
+        {
+          "step": 38,
+          "epoch": 1.6741573033707864,
+          "loss": 0.3186,
+          "chosen_nll": 0.2530480623245239,
+          "reward_margin": 0.0015279757790267467
+        },
+        {
+          "step": 39,
+          "epoch": 1.7191011235955056,
+          "loss": 0.2922,
+          "chosen_nll": 0.22556687891483307,
+          "reward_margin": 0.0047063566744327545
+        },
+        {
+          "step": 40,
+          "epoch": 1.7640449438202248,
+          "loss": 0.2563,
+          "chosen_nll": 0.19514873623847961,
+          "reward_margin": 0.0032432214356958866
+        },
+        {
+          "step": 41,
+          "epoch": 1.8089887640449438,
+          "loss": 0.2353,
+          "chosen_nll": 0.19620013236999512,
+          "reward_margin": 0.01961759477853775
+        },
+        {
+          "step": 42,
+          "epoch": 1.8539325842696628,
+          "loss": 0.3263,
+          "chosen_nll": 0.2590755820274353,
+          "reward_margin": 0.0014954796060919762
+        },
+        {
+          "step": 43,
+          "epoch": 1.898876404494382,
+          "loss": 0.4006,
+          "chosen_nll": 0.3028530180454254,
+          "reward_margin": -0.011686844751238823
+        },
+        {
+          "step": 44,
+          "epoch": 1.9438202247191012,
+          "loss": 0.3098,
+          "chosen_nll": 0.24599161744117737,
+          "reward_margin": 0.00411036005243659
+        },
+        {
+          "step": 45,
+          "epoch": 1.9887640449438202,
+          "loss": 0.2743,
+          "chosen_nll": 0.21021731197834015,
+          "reward_margin": 0.002291546668857336
+        },
+        {
+          "step": 46,
+          "epoch": 2.0,
+          "loss": 0.1215,
+          "chosen_nll": 0.05603497847914696,
+          "reward_margin": 0.0004399828612804413
+        }
+      ]
+    }
+  },
+  "decision": {
+    "a-1": {
+      "outcome": "b: output length stayed short on at least one suite",
+      "sharp_median_drop_suites": [
+        "mbppplus"
+      ],
+      "passed_promotion": false
+    },
+    "b-1": {
+      "outcome": "b: output length stayed short on at least one suite",
+      "sharp_median_drop_suites": [
+        "dev",
+        "mbppplus"
+      ],
+      "passed_promotion": false
+    },
+    "a-2": {
+      "outcome": "b: output length stayed short on at least one suite",
+      "sharp_median_drop_suites": [
+        "mbppplus"
+      ],
+      "passed_promotion": false
+    },
+    "b-2": {
+      "outcome": "b: output length stayed short on at least one suite",
+      "sharp_median_drop_suites": [
+        "dev",
+        "mbppplus"
+      ],
+      "passed_promotion": false
+    }
+  }
+}

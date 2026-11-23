@@ -1,0 +1,5 @@
+.kaggle/
+kaggle.json
+access_token
+access_token.txt
+__pycache__/
